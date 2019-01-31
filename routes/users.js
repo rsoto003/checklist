@@ -32,7 +32,7 @@ router.post('/register', (req, res) => {
             password2: req.body.password2
         });
     } else {
-        
+        res.send('passed')
     }
 })
 

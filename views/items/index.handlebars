@@ -1,0 +1,16 @@
+
+{{#each items}} 
+    <div class="card card-body mb-2 col-xl-8 mx-auto">
+        <h4>{{title}}</h4>
+        <p class="lead">
+            {{details}}
+        </p>
+        <a href="/items/edit/{{id}}" class="btn btn-dark btn-md col-xl-2 col-sm-4 mx-auto mb-2">Edit</a>
+        <form method="post" action="/items/{{id}}?_method=DELETE">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger btn-block col-xl-2 col-sm-4 mx-auto">
+        </form>
+    </div>
+{{else}}
+    <p class="lead">No current items. Add some items to get started!</p>
+{{/each}}

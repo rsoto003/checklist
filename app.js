@@ -54,12 +54,17 @@ app.use(session({
     saveUninitialized: true,
   }));
 
+//Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(flash());
 //Global Variables
 app.use(function(req, res, next){
     res.locals.successMessage = req.flash('successMessage');
     res.locals.errorMessage = req.flash('errorMessage');
     res.locals.error = req.flash('error');
+    res.locals.user = req.user || null;
     //call next piece of middleware
     next();
 })

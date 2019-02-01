@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
+//Use helper, using destructuring
+const {ensureAuthenticated} = require('../helpers/auth');
+
 //Load Item Model
 require('../models/Items');
 const Item = mongoose.model('items');
@@ -9,7 +12,7 @@ const Item = mongoose.model('items');
 module.exports = router;
 
 //Item Index Route
-router.get('/', (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
     Item.find({})
     .sort({date: -1})
     .then(items => {
@@ -19,11 +22,11 @@ router.get('/', (req, res) => {
     })
 })
 //Add Item Form
-router.get('/add', (req,  res)=> {
+router.get('/add', ensureAuthenticated, (req,  res)=> {
     res.render('items/add');
 });
 //Edit Item Form
-router.get('/edit/:id', (req,  res)=> {
+router.get('/edit/:id', ensureAuthenticated, (req,  res)=> {
     Item.findOne({
         _id: req.params.id
     }).then(item => {
@@ -34,7 +37,7 @@ router.get('/edit/:id', (req,  res)=> {
 });
 
 //Process form
-router.post('/',  (req, res) => {
+router.post('/', ensureAuthenticated, (req, res) => {
     //want to catch what is submitted in the form.
     //use bodyParser
     let errors = [];
@@ -70,7 +73,7 @@ router.post('/',  (req, res) => {
 })
 
 //Put request-- Edit Form Process
-router.put('/:id', (req, res) => {
+router.put('/:id', ensureAuthenticated, (req, res) => {
     Item.findOne({
         _id: req.params.id
     }).then(item => {
@@ -86,7 +89,7 @@ router.put('/:id', (req, res) => {
 });
 
 //Delete Item
-router.delete('/:id', (req, res) => {
+router.delete('/:id', ensureAuthenticated, (req, res) => {
     Item.deleteOne({
         _id: req.params.id
     }).then(()=> {

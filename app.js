@@ -7,10 +7,14 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const app = express();
 const path = require('path');
+const passport = require('passport');
 
 //Load Routes
 const items = require('./routes/items');
 const users = require('./routes/users');
+
+//Passport Config
+require('./config/passport')(passport);
 
 //Map Global promise - get rid of deprecation warning
 mongoose.Promise = global.Promise;

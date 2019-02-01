@@ -13,7 +13,7 @@ module.exports = router;
 
 //Item Index Route
 router.get('/', ensureAuthenticated, (req, res) => {
-    Item.find({})
+    Item.find({user: req.user.id})
     .sort({date: -1})
     .then(items => {
         res.render('items/index', {
@@ -28,11 +28,16 @@ router.get('/add', ensureAuthenticated, (req,  res)=> {
 //Edit Item Form
 router.get('/edit/:id', ensureAuthenticated, (req,  res)=> {
     Item.findOne({
-        _id: req.params.id
+        _id: req.params.id,
     }).then(item => {
-        res.render('items/edit', {
-            item: item
-        });
+        if(item.user != req.user.id){
+            req.flash('errorMessage', "Not authorized.");
+            res.redirect('/items');
+        } else {
+            res.render('items/edit', {
+                item: item
+            });
+        }
     })   
 });
 
@@ -61,7 +66,8 @@ router.post('/', ensureAuthenticated, (req, res) => {
     } else {
         const newUser = {
             title: req.body.title,
-            details: req.body.details
+            details: req.body.details,
+            user: req.user.id
         };
         new Item(newUser)
             .save()

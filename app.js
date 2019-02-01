@@ -16,10 +16,13 @@ const users = require('./routes/users');
 //Passport Config
 require('./config/passport')(passport);
 
+//DB Config
+const db = require('./config/database');
+
 //Map Global promise - get rid of deprecation warning
 mongoose.Promise = global.Promise;
 //Connect to Mongoose
-mongoose.connect('mongodb://localhost/checklist-dev', {
+mongoose.connect(db.mongoURI, {
     // useMongoClient: true,
     useNewUrlParser: true
 })
@@ -96,7 +99,8 @@ app.use('/items', items);
 app.use('/users', users)
 
 //store port in a variable
-const port = 5000;
+const port = process.env.PORT || 5000;
+
 //listen on a certain port
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);

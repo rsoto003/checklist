@@ -1,12 +1,12 @@
 
 {{#each items}} 
-    <div class="card card-body mb-2 col-xl-8 mx-auto">
+    <div class="card card-body mb-4 col-xl-6 mx-auto bg-dark text-white">
         <h5>{{date}}</h5>
         <h4>{{title}}</h4>
         <p class="lead">
             {{details}}
         </p>
-        <a href="/items/edit/{{id}}" class="btn btn-dark btn-md col-xl-2 col-sm-4 mx-auto mb-2">Edit</a>
+        <a href="/items/edit/{{id}}" class="btn btn-info btn-md col-xl-2 col-sm-4 mx-auto mb-2">Edit</a>
         <form method="post" action="/items/{{id}}?_method=DELETE">
             <input type="hidden" name="_method" value="DELETE">
             <input type="submit" value="Delete" class="btn btn-danger btn-block col-xl-2 col-sm-4 mx-auto">

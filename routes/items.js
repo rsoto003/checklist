@@ -88,7 +88,7 @@ router.put('/:id', ensureAuthenticated, (req, res) => {
         item.details = req.body.details;
 
         item.save().then(item => {
-            req.flash('successMessage', 'Checklist Item Sucessfully Updated');
+            req.flash('successMessage', 'Checklist Item Successfully Updated');
             res.redirect('/items');
         });
     });
